@@ -4,8 +4,9 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Document(collection = "planets")
 public class Planet {
 
-	@Id
+	@MongoId(value = FieldType.OBJECT_ID)
 	private String id;
 
 	@NotBlank(message = "{msg.planet.name.notblank}")

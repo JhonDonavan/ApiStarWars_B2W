@@ -56,22 +56,22 @@ public class PlanetControllerTest {
 	public void getPlanetByIdNotFound() {
 
 		try {
-			planetController.getPlanetById("not found");
+			planetController.getPlanetById("5f1dbe52cfbbe27e98edd957");
 			assertTrue("Exception failed to be thrown.", false);
 		} catch (PlanetNotFoundException e) {
 			assertTrue("Exception thrown successfully.", true);
 		}
 
 	}
-
+	
 	@Test
-	public void getPlanetsByName() {
+	public void getPlanetsByNameNotFound() {
 
-		Planet randomPlanet = getRandomPlanet();
+		//Planet randomPlanet = getRandomPlanet();
 
-		ResponseEntity<List<Planet>> planetsByName = planetController.getPlanetsByName(randomPlanet.getName());
+		ResponseEntity<List<Planet>> planetsByName = planetController.getPlanetsByName("this_planet_not_exist");
 
-		assertThat(planetsByName.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(planetsByName.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
 		assertThat(planetsByName.getBody().size()).isGreaterThan(0);
 
@@ -82,7 +82,7 @@ public class PlanetControllerTest {
 
 		Planet planet = new Planet();
 
-		planet.setId("ID_New_Planet_Created");
+		
 		planet.setName("Eriadu");
 		planet.setClimate("polluted");
 		planet.setTerrain("cityscape");
@@ -115,7 +115,6 @@ public class PlanetControllerTest {
 	public void createPlanetConsumingStarWarsApi() {
 		Planet planet = new Planet();
 
-		planet.setId("ID_New_Planet_Created");
 		planet.setName("Eriadu");
 		planet.setClimate("polluted");
 		planet.setTerrain("cityscape");

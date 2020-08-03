@@ -116,8 +116,10 @@ public class PlanetControllerIntegrationTests {
 
 	@Test
 	public void deletePlanet() throws Exception {
-			
-		String url = "/api/planets/";
+		
+		Planet planetRandon = getRandomPlanet();
+		
+		String url = "/api/planets/"+planetRandon.getId();
 	
 		mock.perform(delete(url))
 				.andExpect(status().isNoContent());
