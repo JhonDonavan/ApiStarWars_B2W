@@ -24,13 +24,13 @@ public class Planet {
 	@MongoId(value = FieldType.OBJECT_ID)
 	private String id;
 
-	@NotBlank(message = "{msg.planet.name.notblank}")
+	@NotBlank(message = "{message.planet.name.notblank}")
 	private String name;
 
-	@NotBlank(message = "{msg.planet.climate.notblank}")
+	@NotBlank(message = "{message.planet.climate.notblank}")
 	private String climate;
 
-	@NotBlank(message = "{msg.planet.terrain.notblank}")
+	@NotBlank(message = "{message.planet.terrain.notblank}")
 	private String terrain;
 
 	private List<Film> films;

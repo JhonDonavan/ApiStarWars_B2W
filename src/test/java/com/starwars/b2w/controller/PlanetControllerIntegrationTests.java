@@ -42,6 +42,8 @@ public class PlanetControllerIntegrationTests {
 	private WebApplicationContext context;
 	
 	private MockMvc mock;
+													
+	private static final String PLANET_NOT_FOUND =  "aaaaaaaaaaaaaaaaaaaaaaaa";
 	
 	
 	@Before
@@ -58,6 +60,19 @@ public class PlanetControllerIntegrationTests {
 		mock.perform(get(url))
 			.andExpect(status().isOk());
 		
+	}
+	
+	//ok
+	@Test
+	public void getPlanetByIdNotFound() throws Exception {
+		
+		String url = "/api/planets/".concat(PLANET_NOT_FOUND);
+		
+		mock.perform(get(url))
+			.andExpect(status().isNotFound())
+			.andExpect(jsonPath("$.message", containsString("cannot be found")))
+			.andExpect(jsonPath("$.code", is(equalTo(404))));
+
 	}
 	
 	
@@ -91,7 +106,7 @@ public class PlanetControllerIntegrationTests {
 		
 	}
 		
-	
+	//ok
 	@Test
 	public void createPlanet() throws Exception {
 	
@@ -113,7 +128,21 @@ public class PlanetControllerIntegrationTests {
 		
 	}
 	
-
+	//ok
+	@Test
+	public void createPlanetConsumingStarWarsApi() throws Exception {
+	
+		String url = "/api/planets/";
+				
+		mock.perform(post(url)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(asJsonString(new Planet(null, "Eriadu ", "Eriadu", "Eriadu", null, null))))
+			.andExpect(status().isCreated())
+			.andExpect(jsonPath("$.id", is(notNullValue())));
+	}
+	
+	
+	//ok
 	@Test
 	public void deletePlanet() throws Exception {
 		
@@ -123,6 +152,22 @@ public class PlanetControllerIntegrationTests {
 	
 		mock.perform(delete(url))
 				.andExpect(status().isNoContent());
+	}
+	
+	
+	
+	@Test
+	public void createPlanetFailNullFields() throws Exception {
+	
+		String url = "/api/planets/";
+		
+		mock.perform(post(url)
+			.contentType(MediaType.APPLICATION_JSON)
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(asJsonString(new Planet(null, "Eriadu", null, null, null, null))))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.error", containsString("The planet's climate cannot be null or empty")))
+			.andExpect(jsonPath("$.error", containsString("The planet's terrain cannot be null or empty.")));
 	}
 	
 		

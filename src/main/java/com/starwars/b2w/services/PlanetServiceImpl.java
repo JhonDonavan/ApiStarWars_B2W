@@ -64,7 +64,7 @@ public class PlanetServiceImpl implements PlanetService {
 			throw new PlanetNotFoundException(name);
 		}
 		
-		//TO DO HATEOAS!
+		//TODO HATEOAS!
 		return AllPlanetForfound;
 	}
 
